@@ -1,0 +1,15 @@
+<div *ngIf="quantityTotal <= 0; else productsAvailable">
+    <h3>Oops, on doit refaire du stock...</h3>
+</div>
+
+<ng-template #productsAvailable>
+    <ng-container *ngFor="let prod of products">
+        <div *ngIf="prod.StockQuantity > 0" [ngClass]="{cheap : prod.Price <= 5}">
+            <h3>{{prod.Title}}</h3>
+            <p>{{prod.Description}}</p>
+            <strong>{{prod.Price}}€</strong>
+            <input type="button" value="ACHETER BETEMENT" (click)="buyProduct(prod)">
+            <input type="button" value="ACHETER MALIN" (click)="prod.removeOne()">
+        </div>
+    </ng-container>
+</ng-template>
