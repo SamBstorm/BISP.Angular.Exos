@@ -3,4 +3,5 @@ export interface IProduct {
     Description : string;
     Price : number;
     StockQuantity : number;
+    Categories : string[];
 }

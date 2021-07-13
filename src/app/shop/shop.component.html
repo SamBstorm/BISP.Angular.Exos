@@ -1,15 +1,35 @@
+<select name="categorie" [(ngModel)]="category">
+    <ng-container *ngFor="let cat of categories">
+        <option>
+            {{cat}}
+        </option>
+    </ng-container>
+    
+</select>
+
 <div *ngIf="quantityTotal <= 0; else productsAvailable">
     <h3>Oops, on doit refaire du stock...</h3>
 </div>
 
 <ng-template #productsAvailable>
-    <ng-container *ngFor="let prod of products">
+    <ng-container *ngFor="let prod of filteredList">
         <div *ngIf="prod.StockQuantity > 0" [ngClass]="{cheap : prod.Price <= 5}">
             <h3>{{prod.Title}}</h3>
             <p>{{prod.Description}}</p>
-            <strong>{{prod.Price}}€</strong>
-            <input type="button" value="ACHETER BETEMENT" (click)="buyProduct(prod)">
-            <input type="button" value="ACHETER MALIN" (click)="prod.removeOne()">
+            <strong>{{prod.Price | currency:'EUR'}}</strong>
+            <input type="button" value="Buy it!" (click)="buyProduct(prod)">
         </div>
     </ng-container>
 </ng-template>
+
+<div class="panier">
+    <h3>Mon panier</h3>
+    <ng-container *ngFor="let prod of productsCart">
+        <div>
+            <h4>{{prod.Title}}</h4>
+            <strong>{{prod.Price | currency:'EUR'}}</strong>
+            <div><em>{{prod.StockQuantity}}</em></div>
+        </div>
+    </ng-container>
+    <div><strong>{{TotalAPayer | currency:'EUR'}}</strong></div>
+</div>
